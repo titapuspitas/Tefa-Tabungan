@@ -13,6 +13,9 @@
         <mxCell id="1VYzOXZbYCuGuA3opQZz-4" value="&lt;div&gt;wali kelas&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="520" y="185" width="80" height="150" as="geometry" />
         </mxCell>
+        <mxCell id="1VYzOXZbYCuGuA3opQZz-5" value="TABUNGAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="315" y="70" width="60" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

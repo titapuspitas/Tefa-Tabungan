@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Header />
-    <Menu />
-    <slot />
+   
   </div>
 </template>

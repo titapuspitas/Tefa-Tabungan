@@ -1,13 +1,19 @@
 <template>
-  <div class="header">
-    <div class="h-text">
-      <nav class="navbar sticky-top p-5 navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">TABUNGAN SISWA</a>
-        </div>
-      </nav>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Tabungan Siswa</span>
     </div>
-  </div>
+  </nav>
 </template>
 
+<style scoped>
+.navbar{
+  background: #1A9EA7;
+  height: 150px;
+}
+.navbar-brand{
+  color: white;
+  font-size: 40px;
+}
+</style>
 

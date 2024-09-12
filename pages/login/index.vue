@@ -1,6 +1,6 @@
 <template>
   <div class="tinggi container-fluid">
-    <div class="row justify-content-center : justify-">
+    <div class="row justify-content-center">
       <div class="col-3">
         <div class="container shadow p-3" style="background-color: #D9D9D9;">
           <form>
@@ -8,7 +8,7 @@
               <h2 class="row justify-content-center">Login</h2>
             </div>
             <div class="mb-3">
-              <input v-model="email" type="text" class="form-control icon  "  placeholder="Username" >
+              <input v-model="email" type="text" class="form-control icon"  placeholder="Username">
             </div>
             <div class="mb-5">
               <input v-model="password" type="password" class="form-control icon-eye" placeholder="password">
@@ -24,6 +24,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+  layout: 'login',
+})
 const client = useSupabaseClient()
 const email = ref("");
 const password = ref("");
@@ -33,15 +36,16 @@ async function handleLogin() {
     email: email.value,
     password: password.value
   })
-  if(!error) redirectTo('/dashboard')
+  if(!error) navigateTo('/dashboard')
 }
 </script>
+
 
 
 <style scoped>
 .tinggi{
   height: 100vh;
-  padding-block: 30vh;
+  padding-block: 20vh;
 }
 .button {
   border: none;

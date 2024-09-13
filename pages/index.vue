@@ -1,28 +1,15 @@
 <template>
-  <div>
-    <div class="container-fluid jarak pe-3 pt-5 pb-3">
+    <div class="container-fluid">
       <div class="row justify-content-evenly">
         <div class="col-md-3 m-3 d-flex justify-content-end align-items-center siswaa text-center"><nuxt-link to=siswa class="test">Siswa<i class="ms-5 bi bi-person-fill zoom "></i></nuxt-link></div>
         <div class="col-md-3 m-3 d-flex justify-content-end align-items-center tabungann text-center">Tabungan<i class="ms-4 bi bi-bar-chart-fill zoom"></i></div>
         <div class="col-md-3 m-3 d-flex justify-content-end align-items-center saldo text-center">Saldo<i class="ms-5 bi bi-pie-chart-fill zoom "></i></div>
       </div>
     </div>
-  </div>
 </template>
 
 
 <style scope>
-  .test{
-    color: black;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-  }
-  .jarak{
-    background-color: #f4f4f4;
-    padding-left: 320px ;
-    height: 100vh ;
-  }
   .zoom{
     font-size: 100px;
   }

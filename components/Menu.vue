@@ -17,17 +17,18 @@
         <li class="tabungan mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi-book bi-bookmarks-fill" viewBox="0 0 16 17">
           <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5z"/>
           <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1z"/>
-          </svg>Pemasukan
+        </svg>Tabungan
         </li>
       </NuxtLink>
-      <NuxtLink to="/tabungan/narik">
-        <li class="tabungan mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi-book bi-bookmarks-fill" viewBox="0 0 16 17">
-          <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5z"/>
-          <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1z"/>
-          </svg>Penarikan
-        </li>
-      </NuxtLink>
-      <NuxtLink to="/logout" class=" text-white">
+        <ul>
+          <NuxtLink to="/pemasukan/" style="text-decoration: none;color: white;">
+            <li>Pemasukan</li>
+          </NuxtLink>
+          <NuxtLink to="/penarikan" style="text-decoration: none;color: white;">
+            <li>Penarikan</li>
+          </NuxtLink>
+          </ul>
+      <NuxtLink to="/logout" class="text-white">
         <li class="logout mb-3">
           Logout
         </li>

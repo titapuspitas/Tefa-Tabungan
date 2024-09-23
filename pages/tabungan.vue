@@ -27,15 +27,19 @@
           </div>
         </div>
       </form>
-    <div class="row justify-content-end p-3">
+    <div class="position-absolute top-70 end-0 p-5"> 
+      <nuxt-link to="/dashboard">
         <button class="btn btn-secondary">
           kembali
         </button>
+      </nuxt-link> 
+      <nuxt-link to="/pemasukan">
         <button class="btn btn-primary ms-5">
           simpan
         </button>
+      </nuxt-link>
+      </div>
     </div>
-  </div>
 </template>
 <style scope>
   .btn{

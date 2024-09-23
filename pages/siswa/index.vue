@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid pe-3 pt-5 pb-3">
-      <div class="row text-center">
+      <div class="row text-center p-5">
         <H1>DATA SISWA</H1>
       </div>
       <div class="row justify-content-end">
@@ -32,13 +32,15 @@
               </tr>
             </tbody>
           </table>
-          <div class="row justify-content-end">
-            <div class="col-1">
-              <button class="btn btn-secondary">
-                kembali
-              </button>
+          <nuxt-link to="/dashboard">
+            <div class="position-absolute top-70 end-0 p-5">
+              <div class="col-1">
+                <button class="btn btn-secondary">
+                  kembali
+                </button>
+              </div>
             </div>
-          </div>
+          </nuxt-link>
         </div>
       </div>
     </div>

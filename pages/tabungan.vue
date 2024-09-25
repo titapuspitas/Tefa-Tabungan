@@ -4,20 +4,21 @@
         <H1>TABUNGAN</H1>
       </div>
       <form>
-        <div class="row mb-3">
-          <label for="Kategori" class="kat d-flex mb-3 p-3 col-sm-2 col-form-label">Kategori</label>
+        <form @submit.prevent="kirimData">
+          <div class="row mb-3">
+            <label for="Kategori" class="kat d-flex mb-3 p-3 col-sm-2 col-form-label">Kategori</label>
           <div class="col-sm-10">
-            <select class="form-select" aria-label="Default select example" placeholder="Kategori">
-              <option selected>pemasuk/penarik</option>
-              <option value="1">pemasukan</option>
-              <option value="2">penarikan</option>
-            </select>
-          </div>
+            <select class="form-select form-select-lg " aria-label="Default select example">
+                <option selected></option>
+                <option value="1">Pemasukan</option>
+                <option value="2">Penarikan</option>
+              </select>
+              </div>
         </div>  
         <div class="row mb-3">
-          <label for="id" class="id d-flex mb-3 p-3 col-sm-2 col-form-label">id siswa</label>
+          <label for="tabungan" class="nama d-flex mb-3 p-3 col-sm-2 col-form-label">Nama</label>
           <div class="col-sm-10">
-            <input type="id siswa" class="da form-control" id="id siswa">
+            <input type="Nama" class="da form-control" id="Nama">
           </div>
         </div>
         <div class="row mb-3">
@@ -26,6 +27,7 @@
             <input type="nominal" class="no form-control" id="nominal">
           </div>
         </div>
+      </form>
       </form>
     <div class="position-absolute top-70 end-0 p-5"> 
       <nuxt-link to="/dashboard">
@@ -41,7 +43,25 @@
       </div>
     </div>
 </template>
+
+<script setup>
+const supabase = useSupabaseClient()
+
+const form = ref ({
+  tabungan : "",
+})
+
+const kirimData = async () => {
+  // console.log(form.value)
+  const { error } = await supabase.from('tabungan').insert([form.value])
+  if(!error) navigateTo('/saldom')
+}
+onMounted(() => {
+  getkirimData()
+})
+</script>
 <style scope>
+
   .btn{
     width: 10rem ;
   }

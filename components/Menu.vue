@@ -43,7 +43,7 @@ a{
 }
 .menu{
   background: #3E3434;
-  height: 85vh;
+  min-height: 85vh;
   width: 300px;
 }
 .beranda{

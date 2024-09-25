@@ -4,9 +4,9 @@
       <H1>TABUNGAN > PENARIKAN</H1>
     </div>
       <div class="row justify-content-end">
-        <div class="col-5">
-          <form class="d-flex mb-3" role="search">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        <div class="col-5 p-3">
+          <form  @submit.prevent="getData">
+            <input v-model="keyword" type="search" class="form-control" placeholder="Search...">
           </form>
         </div>
       </div>
@@ -15,22 +15,38 @@
           <table class="table table-bordered">
             <thead>
             <tr>
-                <td>id</td>
-                <td>tgl</td>
-                <td>id_siswa</td>
-                <td>nominal</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>356235</td>
-                <td>1</td>
-                <td>1000</td>
-              </tr>
-            </tbody>
+              <td>#</td>
+              <td>WAKTU</td>
+              <td>Nama</td>
+              <td>nominal</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(visitor,i) in visitors" :key="i">
+              <td>{{ i+1 }}.</td>
+              <td>{{ visitor.tanggal }}, {{ visitor.waktu }}</td>
+              <td>{{ visitor.Nama }}</td>
+              <td>{{ visitor.nominal }}</td>
+            </tr>
+          </tbody>
           </table>
         </div>
       </div>
   </div>
 </template>
+<script setup>
+const supabase = useSupabaseClient()
+const keyword = ref('')
+const visitors = ref([])
+const data = ref(visitors)
+
+const getData = async () => {
+  const { data, error } = await supabase.from('pemasukan').select( `*`)
+  .ilike('nama', `%${keyword.value}%`)
+  if(data) visitors.value = data
+}
+
+onMounted(() => {
+  getData()
+})
+</script>

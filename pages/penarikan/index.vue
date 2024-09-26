@@ -15,7 +15,7 @@
           <table class="table table-bordered">
             <thead>
             <tr>
-              <td>#</td>
+              <td>id</td>
               <td>WAKTU</td>
               <td>Nama</td>
               <td>nominal</td>
@@ -50,3 +50,8 @@ onMounted(() => {
   getData()
 })
 </script>
+<style scoped>
+.table{
+  text-align: center;
+}
+</style>

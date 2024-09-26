@@ -2,7 +2,7 @@
   <div class="container-fluid p-5">
     <div class="row mb-5">
       <H1>TABUNGAN > PEMASUKAN</H1>
-    </div>
+      </div>
       <div class="row justify-content-end">
         <div class="col-5 p-3">
           <form  @submit.prevent="getData">
@@ -29,9 +29,9 @@
               <td>{{ visitor.nominal }}</td>
             </tr>
           </tbody>
-          </table>
-        </div>
+        </table>
       </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -50,3 +50,8 @@ onMounted(() => {
   getData()
 })
 </script>
+<style scoped>
+.table{
+  text-align: center;
+}
+</style>

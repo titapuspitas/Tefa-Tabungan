@@ -1,39 +1,65 @@
 <template>
   <div class="container-fluid p-5">
-    <div class="row mb-5">
-      <H1>TABUNGAN > PEMASUKAN</H1>
+      <div class="row mb-5">
+        <H1>TABUNGAN</H1>
+      </div>
+      <form>
+        <form @submit.prevent="kirimData">
+          <div class="row mb-3">
+            <label for="Kategori" class="kat d-flex mb-3 p-3 col-sm-2 col-form-label">Kategori</label>
+          <div class="col-sm-10">
+            <select class="form-select form-select-lg " aria-label="Default select example">
+                <option selected></option>
+                <option value="1">Pemasukan</option>
+                <option value="2">Penarikan</option>
+              </select>
+              </div>
+        </div>  
+        <div class="row mb-3">
+          <label for="tabungan" class="nama d-flex mb-3 p-3 col-sm-2 col-form-label">Nama</label>
+          <div class="col-sm-10">
+            <input type="Nama" class="da form-control" id="Nama">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="masukan nominal" class="nom d-flex mb-3 p-3 col-sm-2 col-form-label">Jumlah nominal</label>
+          <div class="col-sm-10">
+            <input type="nominal" class="no form-control" id="nominal">
+          </div>
+        </div>
+      </form>
+      </form>
+    <div class="position-absolute top-70 end-0 p-5"> 
+      <nuxt-link to="/pemasukan">
+        <button class="btn btn-primary ms-5">
+          simpan
+        </button>
+      </nuxt-link>
+      </div>
     </div>
-    <NuxtLink to="/tabungan/tabungan">
-      <button class="btn btn-success me-5">Pemasukan</button>
-    </NuxtLink>
-      <div class="row justify-content-end">
-        <div class="col-5">
-          <form class="d-flex mb-3" role="search">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-                <td>id</td>
-                <td>tgl</td>
-                <td>id_siswa</td>
-                <td>nominal</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>356235</td>
-                <td>1</td>
-                <td>1000</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-  </div>
 </template>
+
+<script setup>
+const supabase = useSupabaseClient()
+
+const form = ref ({
+  kategori : "",
+  Nama : "",
+  Jumlah_nominal : "",
+})
+
+const kirimData = async () => {
+  // console.log(form.value)
+  const { error } = await supabase.from('tabungan').insert([form.value])
+  if(!error) navigateTo('/saldom')
+}
+onMounted(() => {
+  getkirimData()
+})
+</script>
+<style scope>
+
+  .btn{
+    width: 10rem ;
+  }
+</style>

@@ -55,6 +55,12 @@ onMounted(() => {
 })
 </script>
 
-<style scope>
-
+<style scoped>
+.table{
+  text-align: center;
+}
+.container-fluid{
+  max-height: 85vh;
+  overflow: auto;
+}
 </style>

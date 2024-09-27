@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row justify-content-evenly">
-      <div class="col-md-3 m-3 d-flex justify-content-end align-items-center profil text-center"><nuxt-link to="/profil" class="test">Profil<i class="ms-5 bi bi-person-fill zoom "></i></nuxt-link></div>
+      <div class="col-md-3 m-3 d-flex justify-content-end align-items-center profil text-center"><nuxt-link to="" class="test">Profil<i class="ms-5 bi bi-person-fill zoom "></i></nuxt-link></div>
       <div class="col-md-3 m-3 d-flex justify-content-end align-items-center saldo text-center">Saldo<i class="ms-5 bi bi-pie-chart-fill zoom "></i></div>
     </div>
   </div>

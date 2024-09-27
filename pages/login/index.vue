@@ -30,11 +30,6 @@ definePageMeta({
 const client = useSupabaseClient()
 const email = ref("");
 const password = ref("")
-const profile = ref({
-  user_id: "",
-  role: "",
-  fullname: ""
-})
 
 async function handleLogin() {
   // console.log("hai")
@@ -42,19 +37,10 @@ async function handleLogin() {
     email: email.value,
     password: password.value,
   })
+  if(error) throw error
   if(data) {
-    profile.value = getRole(data)
-    console.log(profile.value)
+    navigateTo('/dashboard')
   }
-}
-
-async function getRole(u) {
-  let { data, error } = await client
-    .from('profile')
-    .select('*')
-    .eq('user_id', u.value.id)
-    .single()
-  if(data) return data
 }
 </script>
 

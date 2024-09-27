@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid pe-3 pt-5 pb-3">
       <div class="row text-center p-2">
-        <H1>DATA SISWA</H1>
+        <h1>DATA SISWA</h1>
       </div>
       <div class="row justify-content-end">
         <div class="col-5 p-3">
@@ -45,7 +45,7 @@ const visitors = ref([])
 const data = ref(visitors)
 
 const getData = async () => {
-  const { data, error } = await supabase.from('siswa').select( `*`)
+  const { data, error } = await supabase.from('siswa').select( `*`).order('id')
   .ilike('nama', `%${keyword.value}%`)
   if(data) visitors.value = data
 }

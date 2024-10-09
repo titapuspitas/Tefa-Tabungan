@@ -1,10 +1,16 @@
 <template>
     <nav class="navbar fixed">
       <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Tabungan Siswa</span>
+        <span class="navbar-brand mb-0 h1">Selamat Datang Di Tabungan {{ judul }}</span>
       </div>
     </nav>
 </template>
+
+<script setup>
+defineProps({
+  judul: String
+})
+</script>
 
 <style scoped>
 .navbar{

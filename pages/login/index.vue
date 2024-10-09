@@ -39,8 +39,21 @@ async function handleLogin() {
   })
   if(error) throw error
   if(data) {
-    navigateTo('/dashboard')
+    console.log(data)
+    getProfileRole(data.user.id)
   }
+}
+
+async function getProfileRole(id) {
+  const { data, error } = await client
+      .from('profile')
+      .select('role')
+      .eq('user_id', id)
+      .single()
+    if(data) {
+      if(data.role == 'siswa') navigateTo('/murid')
+      else navigateTo('/dashboard')
+    } 
 }
 </script>
 

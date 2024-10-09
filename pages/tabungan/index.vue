@@ -23,11 +23,7 @@
         </div>
       </div>
       <div class="row mb-3">
-        <label
-          for="tabungan"
-          class="nama d-flex mb-3 p-3 col-sm-2 col-form-label"
-          >Nama</label
-        >
+        <label for="tabungan" class="nama d-flex mb-3 p-3 col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-10">
           <select class="form-select form-select-lg" v-model="form.id_siswa">
             <option v-for="s in siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
@@ -35,11 +31,7 @@
         </div>
       </div>
       <div class="row mb-3">
-        <label
-          for="masukan nominal"
-          class="nom d-flex mb-3 p-3 col-sm-2 col-form-label"
-          >Jumlah nominal</label
-        >
+        <label for="masukan nominal" class="nom d-flex mb-3 p-3 col-sm-2 col-form-label">Jumlah nominal</label>
         <div class="col-sm-10">
           <input v-model="form.nominal" type="number" class="no form-control" id="nominal" />
         </div>

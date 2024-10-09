@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <style scope>
-.a{
+a{
   text-decoration: none;
 }
 .test{

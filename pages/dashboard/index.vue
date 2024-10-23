@@ -4,7 +4,7 @@
       <div v-if="userRole == 'guru'" class="col-md-3 m-3 d-flex justify-content-end align-items-center siswaa text-center "><nuxt-link to="/siswa" class="test">Siswa<i class="ms-5 bi bi-person-fill zoom "></i></nuxt-link></div>
       <div v-if="userRole == 'guru'" class="col-md-3 m-3 d-flex justify-content-end align-items-center tabungann text-center"><nuxt-link to="/tabungan" class="test">Tabungan<i class="ms-4 bi bi-bar-chart-fill zoom"></i></nuxt-link></div>
       <div v-if="userRole == 'siswa'" class="col-md-3 m-3 d-flex justify-content-end align-items-center siswaa text-center "><nuxt-link to="/siswa" class="test">profil<i class="ms-5 bi bi-person-fill zoom "></i></nuxt-link></div>
-      <div v-if="userRole == 'guru'"  class="col-md-3 m-3 d-flex justify-content-end align-items-center saldo text-center">Saldo<i class="ms-5 bi bi-pie-chart-fill zoom ">{{ visitors.saldo_semua}}</i></div>
+      <div v-if="userRole == 'guru'"  class="col-md-3 m-3 d-flex justify-content-end align-items-center saldo text-center">{{ totalBalance }}<i class="ms-5 bi bi-pie-chart-fill zoom "></i></div>
       <div v-if="userRole == 'siswa'" class="col-md-3 m-3 d-flex justify-content-end align-items-center saldo text-center "><nuxt-link to="/siswa" class="test">Saldo<i class="ms-5 bi bi-pie-chart-fill zoom"></i></nuxt-link></div>
     </div>
   </div>
@@ -14,7 +14,7 @@
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 const userRole = ref('')
-const visitors = ref([])
+const totalBalance = ref(0);
 
 async function getRole() {
   let { data, error } = await client
@@ -25,17 +25,24 @@ async function getRole() {
   if(error) throw error
   if(data) userRole.value = data.role
 }
-async function getSAL() {
-  let { data, error } = await Supabase
-    .from('jumlah_tabungan')
-  if(error) throw error
-  if(data) visitors.value=data
-}
-
+const fetchTotalBalance = async () => {
+  const { data, error } = await supabase
+  .from('jumlah_tabungan')
+  .select('balance');
+  
+    if (error) {
+      console.log('Fetched data:', data);
+      totalBalance.value = data.reduce((acc, jumlah_tabungan) => acc + jumlah_tabunga.balance, 0);
+    }
+  
+    return {
+      totalBalance,
+    };
+    };
 
 onMounted(() => {
   getRole()
-  getSAL
+  fetchTotalBalance()
 })
 </script>
 

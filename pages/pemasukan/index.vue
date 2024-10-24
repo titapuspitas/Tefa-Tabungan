@@ -6,7 +6,7 @@
       <div class="row justify-content-end">
         <div class="col-5 p-3">
           <form  @submit.prevent="getData">
-            <input v-model="keyword" type="search" class="form-control" placeholder="Search...">
+            <input v-model="keyword" type="search" class="form-control" placeholder="Search ...">
           </form>
         </div>
       </div>
@@ -36,12 +36,10 @@
 </template>
 <script setup>
 const supabase = useSupabaseClient()
-// const keyword = ref('')
+const keyword = ref('')
 const visitors = ref([])
 const getData = async () => {
-  // const { data, error } = await supabase.from('pemasukan').select( `*,siswa(*)`)
-  // .ilike('nama', `%${keyword.value}%`)
-  // if(data) visitors.value = data
+
   const { data } = await supabase
   .from('pemasukan')
   .select('*, siswa(*)')
@@ -57,5 +55,9 @@ onMounted(() => {
 <style scoped>
 .table{
   text-align: center;
+}
+.container-fluid{
+  max-height: 85vh;
+  overflow: auto;
 }
 </style>

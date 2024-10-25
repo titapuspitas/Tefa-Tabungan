@@ -14,11 +14,11 @@
         <div class="col">
           <table class="table table-bordered">
             <thead>
-            <tr>
-              <td>id</td>
-              <td>WAKTU</td>
-              <td>Nama</td>
-              <td>nominal</td>
+              <tr>
+              <th scope="col">id</th>
+              <th scope="col">WAKTU</th>
+              <th scope="col">Nama</th>
+              <th scope="col">nominal</th>
             </tr>
           </thead>
           <tbody>

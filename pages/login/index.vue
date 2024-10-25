@@ -11,7 +11,7 @@
               <input v-model="email" type="text" class="form-control icon"  placeholder="Username">
             </div>
             <div class="mb-5">
-              <input v-model="password" type="password" class="form-control icon-eye" placeholder="password">
+              <input v-model="password" type="password" class="form-control icon-gembok" placeholder="password">
             </div>
             <div class="mb-5">
               <button @click="handleLogin" type="button" class="button">masuk</button>
@@ -85,11 +85,11 @@ async function getProfileRole(id) {
   padding-right: 100px;
   background-size: 35px;
 }
-.icon-eye {
-  background: url("https://img.icons8.com/?size=100&id=oZFC4NAoTr5c&format=png&color=000000") no-repeat right;
+.icon-gembok {
+  background: url(https://img.icons8.com/?size=100&id=2862&format=png&color=000000) no-repeat right;
   background-color: white;
   padding-right: 100px;
-  background-size: 35px;
+  background-size: 30px;
 }
 
 </style>

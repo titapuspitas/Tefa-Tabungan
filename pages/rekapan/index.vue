@@ -3,12 +3,6 @@
     <div class="row">
       <h2 class="text-center my-4">REKAPAN DATA PERBULAN</h2>
       <div class="col-lg-12">
-        <nuxt-link to="/dashboard">
-          <button type="button" class="btn btn-lg rounded-5 px-5 bg-secondary text-white mb-3">
-            KEMBALI
-          </button>
-        </nuxt-link>
-
         <div class="warna my-3" style="border-radius: 5px;">
           <h5 style="color: white; text-align: center;">
             JUMLAH TABUNGAN SAAT INI: {{ jumlah_tabungan.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}
@@ -43,6 +37,7 @@
 </template>
 
 <script setup>
+
 const supabase = useSupabaseClient();
 const rekapData = ref([]);
 
@@ -58,8 +53,8 @@ const fetchRekapData = async () => {
   try {
     // Ambil data pemasukan dan penarikan
     const [pemasukanData, penarikanData] = await Promise.all([
-      supabase.from("pemasukan").select('tanggal, bulan (nama), jumlah'),
-      supabase.from("penarikan").select('tanggal, bulan (nama), jumlah')
+      supabase.from("pemasukan").select("tgl, nominal"),
+      supabase.from("penarikan").select("tgl, nominal"),
     ]);
 
     if (pemasukanData.error || penarikanData.error) {
@@ -68,46 +63,46 @@ const fetchRekapData = async () => {
 
     const monthlyData = {};
 
-    // Memproses Pemasukan
-    pemasukanData.data.forEach(transaction => {
-      const date = new Date(transaction.tanggal);
+    // Proses data pemasukan
+    pemasukanData.data.forEach((item) => {
+      const date = new Date(item.tgl);
       const year = date.getFullYear();
-      const month = transaction.bulan.nama;
+      const month = date.getMonth();
       const key = `${year}-${month}`;
 
       if (!monthlyData[key]) {
         monthlyData[key] = {
-          bulan: month,
+          bulan: getMonthName(month),
           tahun: year,
           pemasukan: 0,
           penarikan: 0,
         };
       }
-      monthlyData[key].pemasukan += transaction.jumlah;
+      monthlyData[key].pemasukan += item.nominal;
     });
 
-    // Memproses Penarikan
-    penarikanData.data.forEach(transaction => {
-      const date = new Date(transaction.tanggal);
+    // Proses data penarikan
+    penarikanData.data.forEach((item) => {
+      const date = new Date(item.tgl);
       const year = date.getFullYear();
-      const month = transaction.bulan.nama;
+      const month = date.getMonth();
       const key = `${year}-${month}`;
 
       if (!monthlyData[key]) {
         monthlyData[key] = {
-          bulan: month,
+          bulan: getMonthName(month),
           tahun: year,
           pemasukan: 0,
           penarikan: 0,
         };
       }
-      monthlyData[key].penarikan += transaction.jumlah;
+      monthlyData[key].penarikan += item.nominal;
     });
 
-    // Mengurutkan data berdasarkan bulan dan tahun
+    // Susun data menjadi array terurut
     rekapData.value = Object.values(monthlyData).sort((a, b) => {
-      const dateA = new Date(`${a.tahun}-${getMonthNumber(a.bulan)}-01`);
-      const dateB = new Date(`${b.tahun}-${getMonthNumber(b.bulan)}-01`);
+      const dateA = new Date(`${a.tahun}-${a.bulan}-01`);
+      const dateB = new Date(`${b.tahun}-${b.bulan}-01`);
       return dateB - dateA; // Urutkan dari terbaru
     });
   } catch (error) {
@@ -115,16 +110,26 @@ const fetchRekapData = async () => {
   }
 };
 
-// Mendapatkan nomor bulan dari nama
-const getMonthNumber = (monthName) => {
+// Mendapatkan nama bulan dari angka
+const getMonthName = (monthNumber) => {
   const months = [
-    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
   ];
-  return months.indexOf(monthName) + 1;
+  return months[monthNumber];
 };
 
-// Mengambil data saat komponen dimuat
+// Memuat data saat komponen dimuat
 onMounted(() => {
   fetchRekapData();
 });
@@ -137,7 +142,8 @@ onMounted(() => {
 h2 {
   color: black;
 }
-.table-striped th, .table-striped td {
+.table-striped th,
+.table-striped td {
   white-space: nowrap;
 }
 @media (max-width: 576px) {
@@ -154,7 +160,7 @@ h2 {
     float: right;
   }
 }
-.warna{
-  background: #1A9EA7;
+.warna {
+  background: #1a9ea7;
 }
 </style>

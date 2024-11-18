@@ -32,3 +32,21 @@ onMounted(() => {
   getProfile()
 })
 </script>
+
+<style scoped>
+.container-fluid {
+  background-color: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.list-group-item {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+</style>

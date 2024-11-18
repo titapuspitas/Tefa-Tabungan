@@ -7,14 +7,39 @@
             <div class="mb-3">
               <h2 class="row justify-content-center">Login</h2>
             </div>
-            <div class="mb-3">
-              <input v-model="email" type="text" class="form-control icon"  placeholder="Username">
+
+            <!-- Email Field -->
+            <div class="mb-3 position-relative">
+              <input 
+                v-model="email" 
+                type="text" 
+                class="form-control icon"  
+                placeholder="Username">
+              <i class="bi bi-person-fill position-absolute top-50 end-0 translate-middle-y me-3"></i>
             </div>
-            <div class="mb-5">
-              <input v-model="password" type="password" class="form-control icon-gembok" placeholder="password">
+
+            <!-- Password Field -->
+            <div class="mb-5 position-relative">
+              <input 
+                v-model="password" 
+                :type="isPasswordVisible ? 'text' : 'password'" 
+                class="form-control icon-gembok" 
+                placeholder="Password">
+              <i 
+                @click="togglePasswordVisibility"
+                :class="isPasswordVisible ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'" 
+                class="position-absolute top-50 end-0 translate-middle-y me-3"
+                style="cursor: pointer;"></i>
             </div>
+
+            <!-- Error Message -->
+            <div v-if="errorMessage" class="mb-3 text-danger text-center">
+              {{ errorMessage }}
+            </div>
+
+            <!-- Login Button -->
             <div class="mb-5">
-              <button @click="handleLogin" type="button" class="button">masuk</button>
+              <button @click="handleLogin" type="button" class="button">Masuk</button>
             </div>
           </form>
         </div>
@@ -27,40 +52,63 @@
 definePageMeta({
   layout: 'login',
 })
-const client = useSupabaseClient()
-const email = ref("");
-const password = ref("")
 
+const client = useSupabaseClient()
+const email = ref("")
+const password = ref("")
+const isPasswordVisible = ref(false)
+const errorMessage = ref("")  // Store error message
+
+// Function to handle login
 async function handleLogin() {
-  // console.log("hai")
-  const {data, error} = await client.auth.signInWithPassword({
+  const { data, error } = await client.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   })
-  if(error) throw error
-  if(data) {
-    console.log(data)
+
+  if (error) {
+    // Check the error type and assign the appropriate error message
+    if (error.message.includes("invalid email")) {
+      errorMessage.value = "Email yang anda masukkan salah"
+    } else if (error.message.includes("incorrect password")) {
+      errorMessage.value = "Password yang anda masukkan salah"
+    } else {
+      errorMessage.value = "Periksa lebih teliti !!!"
+    }
+    
+    // Clear error message after 3 seconds
+    setTimeout(() => {
+      errorMessage.value = ""
+    }, 1000)
+    return
+  }
+
+  if (data) {
     getProfileRole(data.user.id)
   }
 }
 
+// Function to get user role after login
 async function getProfileRole(id) {
   const { data, error } = await client
-      .from('profile')
-      .select('role')
-      .eq('user_id', id)
-      .single()
-    if(data) {
-      if(data.role == 'siswa') navigateTo('/murid')
-      else navigateTo('/dashboard')
-    } 
+    .from('profile')
+    .select('role')
+    .eq('user_id', id)
+    .single()
+  if (data) {
+    if (data.role == 'siswa') navigateTo('/murid')
+    else navigateTo('/dashboard')
+  }
+}
+
+// Toggle password visibility
+function togglePasswordVisibility() {
+  isPasswordVisible.value = !isPasswordVisible.value
 }
 </script>
 
-
-
 <style scoped>
-.tinggi{
+.tinggi {
   height: 100vh;
   padding-block: 20vh;
 }
@@ -76,20 +124,22 @@ async function getProfileRole(id) {
   display: inline-block;
   cursor: pointer;
 }
-.row{
+.row {
   padding-block: 25px;
 }
 .icon {
-  background: url("https://img.icons8.com/?size=100&id=98957&format=png&color=000000") no-repeat right;
   background-color: white;
-  padding-right: 100px;
-  background-size: 35px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-size: 25px;
 }
 .icon-gembok {
-  background: url(https://img.icons8.com/?size=100&id=2862&format=png&color=000000) no-repeat right;
   background-color: white;
-  padding-right: 100px;
-  background-size: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-size: 25px;
 }
-
+.position-relative {
+  position: relative;
+}
 </style>

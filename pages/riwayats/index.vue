@@ -13,18 +13,23 @@
           <h5>{{ totalPenarikan.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}</h5>
         </div>
       </div>
+      <div class="col-md-3 m-5 text-center">
+        <div class="balance-box">
+          <h4>Total Saldo</h4>
+          <h5>{{ totalBalance.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}</h5>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-
 const client = useSupabaseClient();
 const user = useSupabaseUser(); // Ambil user yang sedang login
 const totalPemasukan = ref(0);
 const totalPenarikan = ref(0);
-const totalBalance = ref(0)
-const siswa = ref()
+const totalBalance = ref(0);
+const siswa = ref(null);
 
 // Fungsi untuk mengambil total pemasukan dan penarikan untuk pengguna yang sedang login
 const fetchBalances = async () => {
@@ -41,8 +46,12 @@ const fetchBalances = async () => {
     const { data: pemasukanData, error: pemasukanError } = await client
       .from('pemasukan')
       .select('nominal') // Pastikan nama kolom sesuai dengan tabel Anda
-      .eq('user_id', userId); // Filter berdasarkan user_id
-
+      .eq('user_id', userId) // Filter berdasarkan user_id
+      .single();
+  
+  if (data) {
+    siswa.value = data;
+  }
     // Mengambil data penarikan berdasarkan user ID
     const { data: penarikanData, error: penarikanError } = await client
       .from('penarikan')
@@ -50,8 +59,14 @@ const fetchBalances = async () => {
       .eq('user_id', userId); // Filter berdasarkan user_id
 
     // Cek error
-    if (pemasukanError) throw new Error(pemasukanError.message);
-    if (penarikanError) throw new Error(penarikanError.message);
+    if (pemasukanError) {
+      console.error("Error while fetching pemasukan:", pemasukanError.message);
+      throw new Error(pemasukanError.message);
+    }
+    if (penarikanError) {
+      console.error("Error while fetching penarikan:", penarikanError.message);
+      throw new Error(penarikanError.message);
+    }
 
     // Menjumlahkan total pemasukan
     totalPemasukan.value = pemasukanData ? pemasukanData.reduce((acc, item) => acc + item.nominal, 0) : 0;
@@ -64,35 +79,46 @@ const fetchBalances = async () => {
   }
 };
 
+// Fungsi untuk mendapatkan profil siswa
 const getProfile = async () => {
-    const { data, error } = await client
+  const { data, error } = await client
     .from('profile')
     .select()
     .eq('user_id', user.value.id)
-    .single()
-    if(data) {
-      siswa.value = data
-    }
-    
-}
+    .single();
+  
+  if (data) {
+    siswa.value = data;
+  }
+};
 
+// Fungsi untuk mengambil saldo total dari siswa
 const fetchTotalBalance = async () => {
-  // console.log(siswa.id)
-  const { data, error } = await client
-  .from('siswa')
-  .select()
-  .eq('id',siswa.value.id)
-  .single();
-  if (data) totalBalance.value = data
-}
+  try {
+    if (!siswa.value) {
+      console.warn('Siswa profile not found');
+      return;
+    }
+
+    const { data, error } = await client
+      .from('siswa')
+      .select('saldo') // Misalnya saldo ada di kolom 'saldo'
+      .eq('id', siswa.value.id)
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    if (data) totalBalance.value = data.saldo; // Ambil saldo siswa
+  } catch (error) {
+    console.error('Terjadi kesalahan saat mengambil saldo:', error.message);
+  }
+};
 
 // Memanggil fungsi saat komponen dimuat
-onMounted(() => {
-  fetchBalances();
-  getProfile()
-  setTimeout(() => {
-    fetchTotalBalance()
-  }, 1000);
+onMounted(async () => {
+  await fetchBalances(); // Ambil total pemasukan dan penarikan
+  await getProfile(); // Ambil profil siswa
+  await fetchTotalBalance(); // Ambil saldo total siswa
 });
 </script>
 
@@ -112,4 +138,3 @@ onMounted(() => {
   margin: 20px 0 0;
 }
 </style>
-

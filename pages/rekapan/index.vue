@@ -18,6 +18,7 @@
                 <th>Tahun</th>
                 <th>Pemasukan</th>
                 <th>Penarikan</th>
+                <th>Saldo</th>
               </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                 <td>{{ rekapan.tahun }}</td>
                 <td>{{ rekapan.pemasukan.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}</td>
                 <td>{{ rekapan.penarikan.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}</td>
+                <td>{{ rekapan.saldo.toLocaleString("id-ID", { style: "currency", currency: "IDR" }) }}</td>
               </tr>
             </tbody>
           </table>
@@ -44,7 +46,7 @@ const rekapData = ref([]);
 // Menghitung total tabungan
 const jumlah_tabungan = computed(() => {
   return rekapData.value.reduce((total, rekapan) => {
-    return total + rekapan.pemasukan - rekapan.penarikan;
+    return total + rekapan.saldo;
   }, 0);
 });
 
@@ -62,6 +64,7 @@ const fetchRekapData = async () => {
     }
 
     const monthlyData = {};
+    let previousSaldo = 0; // Untuk menyimpan saldo kumulatif sebelumnya
 
     // Proses data pemasukan
     pemasukanData.data.forEach((item) => {
@@ -76,6 +79,7 @@ const fetchRekapData = async () => {
           tahun: year,
           pemasukan: 0,
           penarikan: 0,
+          saldo: 0,
         };
       }
       monthlyData[key].pemasukan += item.nominal;
@@ -94,9 +98,16 @@ const fetchRekapData = async () => {
           tahun: year,
           pemasukan: 0,
           penarikan: 0,
+          saldo: 0,
         };
       }
       monthlyData[key].penarikan += item.nominal;
+    });
+
+    // Hitung saldo untuk setiap bulan berdasarkan pemasukan dan penarikan
+    Object.values(monthlyData).forEach((data) => {
+      data.saldo = previousSaldo + data.pemasukan - data.penarikan;
+      previousSaldo = data.saldo; // Update saldo kumulatif
     });
 
     // Susun data menjadi array terurut

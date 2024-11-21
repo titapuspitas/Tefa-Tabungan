@@ -108,6 +108,23 @@ function togglePasswordVisibility() {
 </script>
 
 <style scoped>
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .menu {
+        display: none;
+    }
+}
+@media (min-width: 769px) {
+    body {
+        font-size: 18px;
+    }
+    .menu {
+        display: block;
+    }
+}
+
 .tinggi {
   height: 100vh;
   padding-block: 20vh;

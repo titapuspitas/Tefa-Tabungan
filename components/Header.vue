@@ -47,11 +47,11 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .navbar {
-    height: 10vh; /* Kurangi tinggi navbar untuk layar kecil */
+    height: 10vh; 
   }
 
   .navbar-brand {
-    font-size: 24px; /* Ukuran font lebih kecil */
+    font-size: 24px; 
   }
 }
 

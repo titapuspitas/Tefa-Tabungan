@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-5">
+  <div class="p container-fluid p-5">
     <div class="row mb-5">
       <H1>TABUNGAN</H1>
     </div>
@@ -78,7 +78,7 @@ onMounted(() => {
 })
 </script>
 <style scope>
-.container-fluid {
+.p{
   min-height: 85vh;
 }
 .btn {

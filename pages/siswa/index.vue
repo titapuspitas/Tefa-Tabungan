@@ -54,7 +54,6 @@ const getData = async () => {
   if (data) visitors.value = data;
 };
 
-// Ambil data siswa saat komponen dimuat
 onMounted(() => {
   getData();
 });

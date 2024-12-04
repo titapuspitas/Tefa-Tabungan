@@ -78,6 +78,9 @@ onMounted(() => {
 })
 </script>
 <style scope>
+.container-fluid {
+  min-height: 85vh;
+}
 .btn {
   width: 10rem;
 }
